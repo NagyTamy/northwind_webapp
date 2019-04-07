@@ -1,11 +1,11 @@
 package com.codecool.web.servlet;
 
-import com.codecool.web.dao.Task2Dao;
-import com.codecool.web.dao.database.DatabaseTask2Dao;
-import com.codecool.web.model.Task2;
-import com.codecool.web.service.Task2Service;
+import com.codecool.web.dao.Task5Dao;
+import com.codecool.web.dao.database.DatabaseTask5Dao;
+import com.codecool.web.model.Task5;
+import com.codecool.web.service.Task5Service;
 import com.codecool.web.service.exception.ServiceException;
-import com.codecool.web.service.simple.SimpleTask2Service;
+import com.codecool.web.service.simple.SimpleTask5Service;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,34 +16,34 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/task2")
-public final class Task2Servlet extends AbstractServlet {
+@WebServlet("/task5")
+public final class Task5Servlet extends AbstractServlet {
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (Connection connection = getConnection(req.getServletContext())) {
-            Task2Dao task2Dao = new DatabaseTask2Dao(connection);
-            Task2Service task2Service = new SimpleTask2Service(task2Dao);
+            Task5Dao task5Dao = new DatabaseTask5Dao(connection);
+            Task5Service task5Service = new SimpleTask5Service(task5Dao);
 
-            List<Task2> allItems = task2Service.getTask2List();
+            List<Task5> allItems = task5Service.getTask5List();
 
             req.setAttribute("list", allItems);
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
-        req.getRequestDispatcher("task2.jsp").forward(req, resp);
+        req.getRequestDispatcher("task5.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try (Connection connection = getConnection(req.getServletContext())) {
-            Task2Dao task2Dao = new DatabaseTask2Dao(connection);
-            Task2Service task2Service = new SimpleTask2Service(task2Dao);
+            Task5Dao task5Dao = new DatabaseTask5Dao(connection);
+            Task5Service task5Service = new SimpleTask5Service(task5Dao);
 
-            String param = req.getParameter("company");
+            String param = req.getParameter("product");
 
-            List<Task2> filteredItems = task2Service.getFilteredTask2List(param);
+            List<Task5> filteredItems = task5Service.getFilteredTask5List(param);
 
             req.setAttribute("list", filteredItems);
         } catch (SQLException ex) {
@@ -52,6 +52,6 @@ public final class Task2Servlet extends AbstractServlet {
             req.setAttribute("error", "No result, please try a different name.");
             doGet(req, resp);
         }
-        req.getRequestDispatcher("task2.jsp").forward(req, resp);
+        req.getRequestDispatcher("task5.jsp").forward(req, resp);
     }
 }

@@ -19,8 +19,6 @@ import java.util.List;
 @WebServlet("/task3")
 public final class Task3Servlet extends AbstractServlet {
 
-    // https://www.postgresql.org/docs/current/static/errcodes-appendix.html
-    private static final String SQL_ERROR_CODE_UNIQUE_VIOLATION = "33505";
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

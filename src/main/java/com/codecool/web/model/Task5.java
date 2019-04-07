@@ -4,9 +4,9 @@ public final class Task5 {
 
     private final String product;
     private final String company;
-    private final int price;
+    private final float price;
 
-    public Task5(String product, String company, int price) {
+    public Task5(String product, String company, float price) {
         this.product=product;
         this.company=company;
         this.price=price;
@@ -20,7 +20,7 @@ public final class Task5 {
         return company;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 }

@@ -53,3 +53,11 @@ form{
 .one_column{
     width: 90%;
 }
+
+.three_column{
+    width: 32%;
+}
+
+.three_column_right{
+    text-align: right;
+}
