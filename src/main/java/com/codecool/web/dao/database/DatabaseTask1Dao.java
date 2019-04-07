@@ -22,7 +22,7 @@ public final class DatabaseTask1Dao extends AbstractDao implements Task1Dao {
         try(Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)){
                 while (resultSet.next()){
-                    items.add(new Task1(resultSet.getString("product_name"), resultSet.getString("company_name")));
+                    items.add(new Task1(resultSet.getString("Product"), resultSet.getString("Supplier")));
 
                 }
             }return items;
@@ -35,7 +35,7 @@ public final class DatabaseTask1Dao extends AbstractDao implements Task1Dao {
         List<Task1> filteredItems = new ArrayList<>();
         List<Task1> allItems = getAll();
         for (Task1 item : allItems){
-            if (item.getProduct().contains(productName)){
+            if (item.getProduct().toLowerCase().contains(productName.toLowerCase())){
                 filteredItems.add(item);
             }
         }

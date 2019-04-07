@@ -20,12 +20,12 @@ public final class DatabaseTask4Dao extends AbstractDao implements Task4Dao {
     @Override
     public List<Task4> getAll() throws SQLException{
         List<Task4> items = new ArrayList<>();
-        String sql = "SELECT company_name AS CompanyName, STRING_AGG(CAST(order_id AS varchar(10)), ',') AS OrderID FROM customers " +
+        String sql = "SELECT company_name AS CompanyName, STRING_AGG(CAST(order_id AS varchar(10)), ', ') AS OrderID FROM customers " +
                 "FULL OUTER JOIN orders ON customers.customer_id=orders.customer_id GROUP BY CompanyName ORDER BY CompanyName;";
         try(Statement statement=connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()){
-                items.add(new Task4(resultSet.getString("company_name"), resultSet.getString("order_id")));
+                items.add(new Task4(resultSet.getString("CompanyName"), resultSet.getString("OrderID")));
             }
         } return items;
     }
@@ -35,7 +35,7 @@ public final class DatabaseTask4Dao extends AbstractDao implements Task4Dao {
         List<Task4> filteredItems = new ArrayList<>();
         List<Task4> allItems = getAll();
         for (Task4 item : allItems){
-            if (item.getCompany().contains(companyName)){
+            if (item.getCompany().toLowerCase().contains(companyName.toLowerCase())){
                 filteredItems.add(item);
             }
         }

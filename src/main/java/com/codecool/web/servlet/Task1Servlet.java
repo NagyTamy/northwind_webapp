@@ -39,4 +39,22 @@ public final class Task1Servlet extends AbstractServlet {
         req.getRequestDispatcher("task1.jsp").forward(req, resp);
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try (Connection connection = getConnection(req.getServletContext())) {
+            Task1Dao task1Dao = new DatabaseTask1Dao(connection);
+            Task1Service task1Service = new SimpleTask1Service(task1Dao);
+
+            String param = req.getParameter("product");
+            List<Task1> filteredItems = task1Service.getFilteredTask1List(param);
+
+            req.setAttribute("list", filteredItems);
+        } catch (SQLException ex) {
+            throw new ServletException(ex);
+        } catch (ServiceException ex){
+            req.setAttribute("error", "No result, please try a different name.");
+            doGet(req, resp);
+        }
+        req.getRequestDispatcher("task1.jsp").forward(req, resp);
+    }
 }

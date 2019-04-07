@@ -26,7 +26,7 @@ public final class DatabaseTask3Dao extends AbstractDao implements Task3Dao {
         try(Statement statement=connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()){
-                items.add(new Task3(resultSet.getString("company_name")));
+                items.add(new Task3(resultSet.getString("Company")));
             }
         } return items;
     }
@@ -37,7 +37,7 @@ public final class DatabaseTask3Dao extends AbstractDao implements Task3Dao {
         List<Task3> filteredItems = new ArrayList<>();
         List<Task3> allItems = getAll();
         for(Task3 item : allItems){
-            if(item.getCompany().contains(companyName)){
+            if(item.getCompany().toLowerCase().contains(companyName.toLowerCase())){
                 filteredItems.add(item);
             }
         }

@@ -28,7 +28,7 @@ public final class DatabaseTask2Dao extends AbstractDao implements Task2Dao {
         try(Statement statement=connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()){
-                items.add(new Task2(resultSet.getInt("NumbersOfProduct"), resultSet.getString("company_name")));
+                items.add(new Task2(resultSet.getInt("NumbersOfProduct"), resultSet.getString("Company")));
             }
         } return items;
     }
@@ -39,7 +39,7 @@ public final class DatabaseTask2Dao extends AbstractDao implements Task2Dao {
         List<Task2> filteredItems = new ArrayList<>();
         List<Task2> allItems = getAll();
         for(Task2 item : allItems){
-            if(item.getCompany().contains(companyName)){
+            if(item.getCompany().toLowerCase().contains(companyName.toLowerCase())){
                 filteredItems.add(item);
             }
         }
