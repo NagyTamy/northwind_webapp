@@ -20,9 +20,10 @@ public final class DatabaseTask3Dao extends AbstractDao implements Task3Dao {
     @Override
     public List<Task3> getAll() throws SQLException{
         List<Task3> items = new ArrayList<>();
-        String sql = "SELECT company_name AS Company FROM suppliers " +
-                "FULL OUTER JOIN products ON products.supplier_id=suppliers.supplier_id GROUP BY company_name " +
-                "ORDER BY Company;";
+        String sql = "SELECT company_name AS Company FROM suppliers sup " +
+                "RIGHT JOIN (SELECT company_name AS Company, count(company_name) AS NumbersOfProduct FROM suppliers " +
+                "INNER JOIN products ON products.supplier_id=suppliers.supplier_id " +
+                "GROUP BY company_name) a ON sup.company_name=a.Company WHERE NumbersOfProduct = 5 ORDER BY Company;";
         try(Statement statement=connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()){

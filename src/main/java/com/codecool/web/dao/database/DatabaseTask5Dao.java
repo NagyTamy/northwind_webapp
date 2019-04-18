@@ -20,10 +20,11 @@ public final class DatabaseTask5Dao extends AbstractDao implements Task5Dao {
     @Override
     public List<Task5> getAll() throws SQLException{
         List<Task5> items = new ArrayList<>();
-        String sql = "SELECT Company, product_name AS Product, unit_price AS Price FROM products p " +
-                "INNER JOIN (SELECT company_name AS Company, MAX(list.unit_price) AS Price FROM products list " +
-                "INNER JOIN suppliers ON list.supplier_id=suppliers.supplier_id " +
-                "GROUP BY Company) t ON p.unit_price=t.Price ORDER BY Price DESC;";
+        String sql = "SELECT s.company_name AS Company, p.product_name as Product, p.unit_price AS Price FROM products AS p " +
+                "JOIN suppliers AS s ON p.supplier_id = s.supplier_id " +
+                "LEFT JOIN products AS prod ON p.supplier_id = prod.supplier_id AND p.unit_price < prod.unit_price " +
+                "WHERE prod.product_id IS NULL " +
+                "ORDER BY p.unit_price DESC, p.product_name, s.company_name;";
         try(Statement statement=connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql)){
             while (resultSet.next()){
