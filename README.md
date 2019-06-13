@@ -1,7 +1,7 @@
 Task description:
 
 
-<h1>Northwind Webapp<h1>
+<h1>Northwind Webapp</h1>
 
 Your task is to create a very simple webapp which displays the result of the queries you have written previously for the Northwind Queries assignment.
 Requirements
